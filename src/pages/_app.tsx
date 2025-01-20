@@ -1,20 +1,17 @@
 import React from "react";
 import { AppProps } from "next/app";
 import { Provider } from "react-redux";
-import { store } from "../store";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-
-const theme = createTheme();
+import { PersistGate } from "redux-persist/integration/react";
+import { wrapper, store, persistor } from "../store";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+      <PersistGate loading={null} persistor={persistor}>
         <Component {...pageProps} />
-      </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
